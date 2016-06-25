@@ -1,0 +1,91 @@
+﻿# Conky version1-2014 #
+# Conky, a system monitor, based on torsmo
+
+
+alignment middle_right
+background no
+use_xft yes
+#font verdana:size=8
+font ubuntu:size=8
+xftalpha 1
+update_interval 2.0
+total_run_times 0
+own_window yes
+own_window_transparent no
+own_window_type desktop
+own_window_argb_visual yes
+own_window_argb_value 120
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 200 400
+maximum_width 300
+draw_shades no
+draw_outline yes
+draw_borders no
+draw_graph_borders no
+default_color 999999
+default_shade_color black
+default_outline_color black
+alignment top_right
+gap_x 20
+gap_y 5
+no_buffers yes
+cpu_avg_samples 2
+text_buffer_size 1024
+override_utf8_locale yes
+uppercase no
+double_buffer yes
+
+
+TEXT
+${font ubuntu:bold:size=10}SISTEMA ${font}
+${color green}$hr $color
+${color green}Sistema:$color $sysname $kernel
+${color green}Tiempo encendido:$color $uptime
+${color green}Hora:$color ${time %H:%M:%S}  ${color green}Fecha:$color ${time %e/%b/%y}
+${font ubuntu:bold:size=10}Clima : Resistencia,Argentina ${font}
+${font ubuntu:normal:size=10}${color green}Temperatura $alignr${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ SARE temperature  temperature 30} °C${font}
+${font ubuntu:normal:size=10}${color green}Estado del Tiempo $alignr${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ SARE cloud_cover 30} ${font}
+${font ubuntu:normal:size=10}${color green}Presion $alignr${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ SARE pressure 30} HP${font}
+${color green}$hr $color
+${font ubuntu:bold:size=10}CPU $alignr${cpu cpu0}% ${font}
+${cpugraph 20, 200 FFFFFF 01FFFF}
+${color green}$hr $color
+${color green}Procesador:$color ${alignr}${freq_g}GHz / 2.4GHz
+${color gold}${cpubar 4 cpu0}${color}
+${font Linux Biolinum Capitals O:size=8}${color green}Temp Procesador:$color ${alignr}${acpitemp}°C 
+ 
+Proceso$alignr CPU% MEM%
+${top name 1}$alignr${top cpu 1}   ${top mem 1}
+${top name 2}$alignr${top cpu 2}   ${top mem 2}
+${top name 3}$alignr${top cpu 3}   ${top mem 3}
+${color green}$hr $color
+${font ubuntu:bold:size=10}RAM$alignr$memperc%  ${font}  
+
+
+Memoria: ${alignr}${mem} / ${memmax}
+#${memgraph 25,200 DE9503 FF0000}
+${color green}$hr $color
+${font ubuntu:bold:size=8}BATERIA: ${font}${font ubuntu:normal:size=8}${color #1E90FF}Tiempo ${color}${battery_time BAT1}
+${color #1E90FF}${font ubuntu:normal:size=8}Estado $alignr ${battery_short BAT1} ${color}
+#${color grey}${font ubuntu:normal:size=8}${color}Tiempo ${color}${battery_time BAT1}
+${if_match $battery_percent<15}${color 008000}${else}${color FF0000}${endif}${battery_bar 6 BAT1}${color}
+
+
+${font ubuntu:bold:size=10}ALMACENAMIENTO ${font}
+${color green}$hr $color
+Raiz: ${alignr}$color${fs_used /} / ${fs_size /}
+${color gold}${fs_bar 4 /}${color grey}
+Archivos: ${alignr}$color${fs_used /media/Archivos/marcelo/} / ${fs_size /media/Archivos/marcelo/}
+${color gold}${fs_bar 4 /media/Archivos/marcelo/}${color grey}
+
+
+${font ubuntu:bold:size=10}REDES${alignr}${font}${downspeed wlp2s0}
+${color green}$hr $color
+${color 77b5f2}Entrada  ${alignr}${totaldown wlp2s0} $color
+${color FF0000}Salida  ${alignr}  ${totalup wlp2s0} ${color}
+${downspeedgraph wlp2s0 50,100 ADD8E6 0000FF}${upspeedgraph wlp2s0 50,100 DE9503 FF0000 } 
+
+
+IP Local ${alignr}${addr wlp2s0}
+IP Publica ${alignr}${execi 3600 wget -O - http://ip.tupeux.com | tail}
